@@ -1,5 +1,5 @@
 {
-  "name": "anvaad-js",
+  "name": "anvaad-js-gursevak",
   "version": "1.2.0",
   "description": "Utilities to prime Gurmukhi script for search. Unicode, first letters, main letters, transliteration.",
   "main": "dist/index.js",
