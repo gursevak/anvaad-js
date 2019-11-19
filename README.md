@@ -76,6 +76,7 @@ Retrieve the first letter of each word from a string
 
 -   `words` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The string from which to get first letters
 -   `eng` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Whether the string is English (optional, default `false`)
+-   `simplify` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Whether to simplify embedded vowels/nasal sounds (eg. E to a, ^ to K)
 
 **Examples**
 
@@ -97,6 +98,8 @@ Removes vowel symbols from a Gurmukhi string
 **Parameters**
 
 -   `words` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The string from which to get main letters
+-   `simplify` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Whether to simplify embedded vowels/nasal sounds (eg. E to a, ^ to K)
+-   `simplifyConsonants` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Whether to simplify half characters to full characters (eg. R to r)
 
 **Examples**
 
@@ -176,6 +179,8 @@ All letter conversions at a minimum must address the following letters that are 
 ˜
 †
 æ
+¡
+Å
 0
 1
 2
@@ -208,6 +213,7 @@ I
 Í
 î
 Î
+Ï
 j
 J
 k

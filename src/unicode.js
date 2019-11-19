@@ -66,8 +66,11 @@ const mapping = {
   œ: '੍ਤ',
   '˜': '੍ਨ',
   '´': 'ੵ',
+  Ï: 'ੵ',
   æ: '਼',
   Î: '੍ਯ',
+  ì: 'ਯ',
+  í: '੍ਯ',
   1: '੧',
   2: '੨',
   3: '੩',
@@ -85,10 +88,50 @@ const mapping = {
   '[': '।',
   ']': '॥',
   '<': 'ੴ',
+  '¡': 'ੴ',
+  Å: 'ੴ',
   Ú: 'ਃ',
+  Ç: '☬',
   '@': 'ੑ',
   '‚': '❁',
+  '•': '𑇇',
+  '¹': '੍',
+  '²': '੍',
   ' ': ' ',
+};
+
+const halfChars = [
+  'H',
+  'R',
+  '®',
+  'Í',
+  'ç',
+  '†',
+  'œ',
+  '˜',
+  '´',
+  'Î',
+  'Ï',
+  'í',
+];
+
+const subscriptNumbers = {
+  1: '',
+  2: '',
+  3: '',
+  4: '',
+  5: '',
+  6: '',
+  8: '',
+  15: '',
+};
+
+const subscriptNumbersShifted = {
+  1: '',
+  2: '',
+  3: '',
+  4: '',
+  6: '',
 };
 
 /**
@@ -112,6 +155,7 @@ function unicode(text = '') {
   const chars = text
     .replace(/>/gi, '')
     .replace(/Ø/gi, '')
+    .replace(/Æ/g, '')
     .split('');
 
   for (let j = 0; j < chars.length; j += 1) {
@@ -123,10 +167,7 @@ function unicode(text = '') {
       if (nextChar != null) {
         if (nextChar === 'e') {
           convertedText += 'ਇ';
-        } else if (nextNextChar === 'R' || nextNextChar === 'H'
-                            || nextNextChar === 'Í' || nextNextChar === 'ç'
-                            || nextNextChar === '†' || nextNextChar === 'œ'
-                            || nextNextChar === '~' || nextNextChar === '®') {
+        } else if (halfChars.includes(nextNextChar)) {
           convertedText += mapping[nextChar];
           convertedText += mapping[nextNextChar];
           convertedText += 'ਿ';
@@ -186,12 +227,24 @@ function unicode(text = '') {
         default:
           convertedText += mapping[currentChar];
       }
+    } else if (currentChar === '1' && nextChar === 'E' && nextNextChar === 'å') {
+      convertedText += 'ੴ';
+      j += 2;
     } else if (currentChar === 'u' && nextChar === 'o') {
       convertedText += 'ੋੁ';
       j += 1;
-    } else if ((currentChar === 'N' && nextChar === 'I') || (currentChar === 'M' && (nextChar === 'U' || nextChar === 'u' || nextChar === 'ü')) || (currentChar === 'ˆ' && nextChar === 'I') || (currentChar === 'N' && nextChar === 'y')) {
+    } else if (currentChar === 'ˆ' && nextChar === 'I') {
       convertedText += mapping[nextChar];
       convertedText += mapping[currentChar];
+      j += 1;
+    } else if (currentChar === '¹' && nextChar === '1' && nextNextChar === '5') {
+      convertedText += '';
+      j += 2;
+    } else if (currentChar === '¹') {
+      convertedText += subscriptNumbers[nextChar];
+      j += 1;
+    } else if (currentChar === '²') {
+      convertedText += subscriptNumbersShifted[nextChar];
       j += 1;
     } else {
       convertedText += mapping[currentChar] || currentChar;
