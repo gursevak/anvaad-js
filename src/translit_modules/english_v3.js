@@ -19,7 +19,6 @@ module.exports = (gurmukhi = '') => {
     return gurmukhi;
   }
   let trans = gurmukhi;
-  const isColoured = false;
   //* *********************
   //    STEP 1
   //* *********************
@@ -49,7 +48,7 @@ module.exports = (gurmukhi = '') => {
 
   // 1. If current letter is "i", move behind next letter
   const regex = /i./gm;
-  trans = trans.replace(regex, full => full.split('').reverse().join(''));
+  trans = trans.replace(regex, (full) => full.split('').reverse().join(''));
 
   // break into single characters
   trans = trans.split('');
@@ -58,7 +57,7 @@ module.exports = (gurmukhi = '') => {
   const transCount = trans.length;
   for (let x = 0; x < transCount; x += 1) {
     let thisLetter = trans[x];
-    const nextLetter = trans[x + 1] || '';
+    const nextLetter = trans[x + 1] || ' ' || '';
 
     //* *********************
     //    STEP 2
@@ -99,14 +98,14 @@ module.exports = (gurmukhi = '') => {
       [';', ';'],
       ['<', 'ik'],
       ['=', '='],
-      ['>', 'Oankaar'],
+      ['>', 'oaⁿkaar'],
       ['?', '?'],
       ['@', 'ₕ'],
       ['A', 'A'],
       ['B', 'bh'],
       ['C', 'chh'],
       ['D', 'dh'],
-      ['E', 'o'],
+      ['E', 'O'],
       ['F', 'ddh'],
       ['G', 'gh'],
       ['H', 'ₕ'],
@@ -134,11 +133,11 @@ module.exports = (gurmukhi = '') => {
       ['^', 'khh'],
       ['_', '_'],
       ['`', "'"],
-      ['a', 'u'],
+      ['a', 'O'],
       ['b', 'b'],
       ['c', 'ch'],
       ['d', 'd'],
-      ['e', 'e'],
+      ['e', 'i'],
       ['f', 'dd'],
       ['g', 'g'],
       ['h', 'h'],
@@ -164,7 +163,7 @@ module.exports = (gurmukhi = '') => {
       ['|', 'ng'],
       ['}', '}'],
       ['~', "'"],
-      ['\u00a1', 'ikOankaar'],
+      ['\u00a1', 'ik oaⁿkaar'],
       ['\u00a2', '\u00a2'],
       ['\u00a3', '\u00a3'],
       ['\u00a4', ''],
@@ -180,10 +179,10 @@ module.exports = (gurmukhi = '') => {
       ['\u00b6', '\u00b6'],
       ['\u00b7', '\u00b7'],
       ['\u00bf', 'ᵣ'],
-      ['\u00c5', 'ek'],
-      ['\u00c6', 'Oaⁿkaar'],
+      ['\u00c5', 'ik'],
+      ['\u00c6', 'oaⁿkaar'],
       ['\u00c7', ''],
-      ['\u00cd', 'ₑ'],
+      ['\u00cd', 'ᵤ'],
       ['\u00ce', 'ₑ'],
       ['\u00cf', 'ₑ'],
       ['\u00d2', '||'],
@@ -191,7 +190,7 @@ module.exports = (gurmukhi = '') => {
       ['\u00d4', ''],
       ['\u00d8', ''],
       ['\u00da', ':'],
-      ['\u00e5', 'Oaⁿkaar'],
+      ['\u00e5', 'oaⁿkaar'],
       ['\u00e6', ''],
       ['\u00e7', 'ch'],
       ['\u00fc', 'u'],
@@ -236,47 +235,47 @@ module.exports = (gurmukhi = '') => {
     // 2. Add an "a" after this letter if the following is true for the
     if (
     // 2.1. current letter:
-      thisLetter !== '' && // 2.1.1. Is not empty
-      'aeiou ooaiee'.indexOf(thisLetter.toLowerCase()) === -1 && // 2.1.2. does not exist in this string (capital or lowercase): "aeou ooaiee"
-      /^[a-zA-Z]+$/.test(thisLetter) && // 2.1.3. It is alphanumeric
+      thisLetter !== '' // 2.1.1. Is not empty
+      && 'aeiou ooaiee'.indexOf(thisLetter.toLowerCase()) === -1 // 2.1.2. does not exist in this string (capital or lowercase): "aeou ooaiee"
+      && /^[a-zA-Z]+$/.test(thisLetter) // 2.1.3. It is alphanumeric
         // 2.1.4. It is not "(n)", "(N)", "hoo", "ye", "noo(n)", "ik", "Oankaar", "ay"
-        thisLetter !== step2Values[step2Keys.indexOf('N')] &&
-        thisLetter !== step2Values[step2Keys.indexOf('M')] &&
-        thisLetter !== 'hoo' &&
-        thisLetter !== 'ye' &&
-        thisLetter !== 'noo(n)' &&
-        thisLetter !== step2Values[step2Keys.indexOf('<')] &&
-        thisLetter !== step2Values[step2Keys.indexOf('>')] && // thisLetter !== 'ay' &&
+        && thisLetter !== step2Values[step2Keys.indexOf('N')]
+        && thisLetter !== step2Values[step2Keys.indexOf('M')]
+        && thisLetter !== 'hoo'
+        && thisLetter !== 'ye'
+        && thisLetter !== 'noo(n)'
+        && thisLetter !== step2Values[step2Keys.indexOf('<')]
+        && thisLetter !== step2Values[step2Keys.indexOf('>')] // thisLetter !== 'ay' &&
       // 2.2. next letter:
-      nextLetter && nextLetter !== '' && // 2.2.1. It is not empty; end of line
-      'iaeouyw'.indexOf(nextLetter.toLowerCase()) === -1 && // 2.2.2. It does not exist in this string (capital or lowercase): "iaeouyw"
-      'I@ HRªÅÆÇÍÏÒÓÔØÚåæçüŒœ:[]()'.indexOf(nextLetter) === -1 && // 2.2.3. It does not exist in this string (case sensitive): "@ HRªÅÆÇÍÏÒÓÔØÚåæçüŒœ:[]()"
+      && nextLetter && nextLetter !== '' // 2.2.1. It is not empty; end of line
+      && 'iaeouyw'.indexOf(nextLetter.toLowerCase()) === -1 // 2.2.2. It does not exist in this string (capital or lowercase): "iaeouyw"
+      && 'I@ HRªÅÆÇÍÏÒÓÔØÚåæçüŒœ:[]()'.indexOf(nextLetter) === -1 // 2.2.3. It does not exist in this string (case sensitive): "@ HRªÅÆÇÍÏÒÓÔØÚåæçüŒœ:[]()"
       // 2.3. THIS IS NOT TRUE:
-      !(
-        nextLetter.toLowerCase().indexOf('i') > -1 && // 2.3.0 nextLetter is i
+      && !(
+        nextLetter.toLowerCase().indexOf('i') > -1 // 2.3.0 nextLetter is i
         // 2.3.1 letter after the next letter:
-        trans[x + 2] && // 2.3.1.1 It exists
-        trans[x + 2] === ' ' // 2.3.1.2 It is " "
+        && trans[x + 2] // 2.3.1.1 It exists
+        && trans[x + 2] === ' ' // 2.3.1.2 It is " "
       )
     ) {
       thisLetter = `${thisLetter}a`;
     }
 
     // 3. Transliterate “e” as “i” if
-    if (
-      thisLetter === 'e' && // 3.1. current letter is “e”
-      (trans[x - 1] || trans[x - 1] === ' ' || trans[x - 1] === ']') && // at the beginning of the word and is:
-      'i'.indexOf(nextLetter.toLowerCase()) > -1 // 3.1.1: followed by the string “i” or “I”
-    ) {
-      thisLetter = 'i';
-    }
-    if (
-      thisLetter === step2Values[step2Keys.indexOf('R')] &&
-      trans[x - 1] === 'i'
-    ) {
-      thisLetter = 'i';
-      trans[x - 1] = 'r';
-    }
+    // if (
+    //   thisLetter === 'e' // 3.1. current letter is “e”
+    //   && (trans[x - 1] || trans[x - 1] === ' ' || trans[x - 1] === ']') // at start of word, is:
+    //   && 'i'.indexOf(nextLetter.toLowerCase()) > -1 // 3.1.1: followed by the string “i” or “I”
+    // ) {
+    //   thisLetter = 'i';
+    // }
+    // if (
+    //   thisLetter === step2Values[step2Keys.indexOf('R')]
+    //   && trans[x - 1] === 'i'
+    // ) {
+    //   thisLetter = 'i';
+    //   trans[x - 1] = 'r';
+    // }
     // save
     trans[x] = thisLetter;
   } // end loop
@@ -287,8 +286,8 @@ module.exports = (gurmukhi = '') => {
   // 4. remove i when
   // 4.1 it is at the end of a word
   // 4.2 it is preceeded by any letter in the string "aeiouy"
-  const regex1 = /[^aeiouy]i(\s|$|\|)/gm;
-  trans = trans.replace(regex1, full => full.replace('i', ''));
+  // const regex1 = /[^aeiouy]i(\s|$|\|)/gm;
+  // trans = trans.replace(regex1, (full) => full.replace('i', ''));
 
   // 5. If a number is preceeded by ‘m:’, ‘mhlw’, ‘mhlu’, ‘Gr’, Transliterate numerals as:
   // regex values account for current state of translit
@@ -323,83 +322,137 @@ module.exports = (gurmukhi = '') => {
   // 4. Transliterate 'ie' to 'i' if both are true:
   // 4.1 preceeded by a vowel in the string ' aeiou' or one of 'oo,ai,ee'
   // 4.2 proceeded by (case sensitive) by the string "Aw"
-  const regex3 = /([aeiou]|oo|ai|ee)(ie)aaa/gm;
-  trans = trans.replace(regex3, full => full.replace('ie', 'i'));
+  // const regex3 = /([aeiou]|oo|ai|ee)(ie)aaa/gm;
+  // trans = trans.replace(regex3, (full) => full.replace('ie', 'i'));
 
   // 6. Transliterate 'ih' to "'eh" if
   // 6.1 next letter is ' ' ; end of the line
-  const regex4 = /ih\s+|$/gm;
-  trans = trans.replace(regex4, full => full.replace('ih', 'eh'));
+  // const regex4 = /ih\s+|$/gm;
+  // trans = trans.replace(regex4, (full) => full.replace('ih', 'eh'));
 
   // 8. Transliterate 'ie' to 'ey' if both are true:
   // 8.1 preceeding letter is the vowel 'a'
   // 8.2 the proceeding letters are empty; end of word
-  const regex5 = /aie\s+|$/gm;
-  trans = trans.replace(regex5, full => full.replace('ie', 'ey'));
+  // const regex5 = /aie\s+|$/gm;
+  // trans = trans.replace(regex5, (full) => full.replace('ie', 'ey'));
 
   // 9. remove extra vowels in specific words
   // 9.1 guramukh, gurabani, guradhev, gurasikh
-  const regex6 = /gura[dmbs][a-zA-Z]+/gm;
-  trans = trans.replace(regex6, full => full.replace('gura', 'gur'));
+  // const regex6 = /gura[dmbs][a-zA-Z]+/gm;
+  // trans = trans.replace(regex6, (full) => full.replace('gura', 'gur'));
   // 9.2 manamukh
-  const regex7 = /mana[m][a-zA-Z]+/gm;
-  trans = trans.replace(regex7, full => full.replace('mana', 'man'));
+  // const regex7 = /mana[m][a-zA-Z]+/gm;
+  // trans = trans.replace(regex7, (full) => full.replace('mana', 'man'));
 
   // 10. fix pehar rara
-  // const regex8 = /x[a-zA-Z]+/gm;
-  // trans = trans.replace(regex8, full => full.replace('x', 'r'));
+  // const regex8 = /x/gm;
+  // trans = trans.replace(regex8, (full) => full.replace('x', 'r'));
   // 10.1 fix pehar rara for 'a(n)mirat' -> 'a(n)mrit'
-  const regex9 = /mirat[a-zA-Z]+/gm;
-  trans = trans.replace(regex9, full => full.replace('mirat', 'mrit'));
+  // const regex9 = /mirat[a-zA-Z]+/gm;
+  // trans = trans.replace(regex9, (full) => full.replace('mirat', 'mrit'));
 
   // 11. enclose all vowels and adhey akhar in quotations for later parsing
-  const regex10 = /(aa|ee|e|u|oo|ay|ai|o|au|ⁿ|ᵣ|ₑ|ₜ|ₜₜ)/gm;
-  if (isColoured) {
-    trans = trans.replace(regex10, '‹$&›');
-  }
-
+  // const regex10 = /(aa|ee|e|u|oo|ay|ai|o|au|ⁿ|ᵣ|ₑ|ₜ|ₜₜ)/gm;
+  // if (isColoured) {
+  // trans = trans.replace(regex10, '‹$&›');
+  // }
   //* *********************
   //    STEP 4
   //* *********************
 
 
   const step4 = [
-    ['uu', 'au'],
-    [' ju ', '\* JU \*'],
-    [' su ', '\* SU \*'],
-    ['ahu ', '\*AHU \*'],
-    ['au ', '\*AU \*'],
-    ['u ', ' '],
-    ['\\* JU \\*', ' ju '],
-    ['\\* SU \\*', ' su '],
-    ['\\*AHU \\*', 'ahu '],
-    ['\\*AU \\*', 'au '],
-    ['hi ', '\*HI \*'],
-    ['i ', ' '],
-    ['\\*HI \\*', 'hi '],
-    ['ai', 'i'],
-    ['AI', 'ai'],
-    ['aaa', "aa'a"],
-    [' n ', ' na '],
-    [' t ', ' ta '],
-    ['(N)', 'n'],
-    ['ah ', 'eh '],
-    ['eee', "e'ee"],
-    // below this is from balpreet k
-    ['Aih', 'ahai'],
-    ['ii', 'i'],
-    ['eay', 'ey'],
-    ['jIA', 'jee'],
-    ["a'eh", 'eh'],
-    ["Re'ee", "Re'e"],
-    ["re'ee", "re'e"],
-    // to here
-    ['aaa', 'aa'],
-    [' au', ' u'],
+    // first line muharini
+    ['Aaa', 'aa'],
+    // ['aaa', 'aa'],
+    ['ie', 'e'],
+    ['iee', 'ee'],
+    ['Ou', 'u'],
+    ['Ooo', 'oo'],
+    ['iay', 'ay'],
+    ['Aai', 'ai'],
+    ['O', 'o'],
+    ['Aau', 'au'],
+    // vowels
+    ['aa', '‹aa›'],
+    ['ee', '‹ee›'],
+    ['e', '‹e›'],
+    ['u', '‹u›'],
+    ['oo', '‹oo›'],
+    ['ay', '‹ay›'],
+    ['ai', '‹ai›'],
+    ['o', '‹o›'],
+    ['au', '‹au›'],
+    ['ⁿ', '‹ⁿ›'],
+    ['ᵣ', '‹ᵣ›'],
+    ['ₑ', '‹ₑ›'],
+    ['ₜₜ', '‹ₜₜ›'],
+    ['ₜ', '‹ₜ›'],
+    // ['›‹', ''],
   ];
 
-  // replace step 4 values
+  // const step4 = [
+  //   ['uu', 'au'],
+  //   [' ju ', '\* JU \*'],
+  //   [' su ', '\* SU \*'],
+  //   ['ahu ', '\*AHU \*'],
+  //   ['au ', '\*AU \*'],
+  //   ['u ', ' '],
+  //   ['\\* JU \\*', ' ju '],
+  //   ['\\* SU \\*', ' su '],
+  //   ['\\*AHU \\*', 'ahu '],
+  //   ['\\*AU \\*', 'au '],
+  //   ['hi ', '\*HI \*'],
+  //   ['i ', ' '],
+  //   ['\\*HI \\*', 'hi '],
+  //   ['ai', 'i'],
+  //   ['AI', 'ai'],
+  //   ['aaa', 'aa'],
+  //   [' n ', ' na '],
+  //   [' t ', ' ta '],
+  //   ['(N)', 'n'],
+  //   ['ah ', 'eh '],
+  //   ['eee', "e'ee"],
+  //   // below this is from balpreet k
+  //   ['Aih', 'ahai'],
+  //   ['ii', 'i'],
+  //   ['eay', 'ey'],
+  //   ['jIA', 'jee'],
+  //   ["a'eh", 'eh'],
+  //   ["Re'ee", "Re'e"],
+  //   ["re'ee", "re'e"],
+  //   // to here
+  //   ['aaa', 'aa'],
+  //   [' au', ' u'],
+  // ];
+
+  // replace step 4 values for vowels
   step4.forEach((e) => {
+    trans = trans.replace(new RegExp(e[0], 'g'), e[1]);
+  });
+
+  const step5 = [
+    // first line muharini
+    ['aaay', 'aa-ay'],
+    ['‹aa›ay', '‹aa›-ay'],
+    ['‹ee›ee', '‹ee›-ee'],
+    ['‹e›ee', '‹e›-ee'],
+    ['‹e›ee', '‹e›-ee'],
+    ['‹ee›e', '‹ee›-e'],
+    ['‹o›oo', '‹o›-oo'],
+    ['‹oo›o', '‹oo›-o'],
+    ['O', 'o'],
+  ];
+
+  step5.forEach((e) => {
+    trans = trans.replace(new RegExp(e[0], 'g'), e[1]);
+  });
+
+  const step6 = [
+    ['›‹', ''],
+  ];
+
+  step6.forEach((e) => {
     trans = trans.replace(new RegExp(e[0], 'g'), e[1]);
   });
 
