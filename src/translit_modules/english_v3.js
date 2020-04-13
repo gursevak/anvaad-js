@@ -450,6 +450,8 @@ module.exports = (gurmukhi = '') => {
 
   const step6 = [
     ['›‹', ''],
+    ['‹‹', '‹'],
+    ['››', '›'],
   ];
 
   step6.forEach((e) => {
