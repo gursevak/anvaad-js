@@ -232,6 +232,46 @@ const aboveChars = [
   'ੌ',
 ];
 
+const validAscii = [
+  ['YÍ', 'ÍY'],
+  ['yR', 'Ry'],
+  ['YR', 'RY'],
+  ['MR', 'RM'],
+  ['NR', 'RN'],
+  ['NY', 'YN'],
+  ['Ny', 'yN'],
+  ['MY', 'YM'],
+  ['My', 'yM'],
+  ['Nu', 'uN'],
+  ['NU', 'UN'],
+  ['Nü', 'üN'],
+  ['Mu', 'uM'],
+  ['MU', 'UM'],
+  ['Mü', 'üM'],
+  ['`u', 'u`'],
+  ['`U', 'U`'],
+  ['`ü', 'ü`'],
+  ['`Rü', 'Rü`'],
+  ['ˆI', 'Iˆ'],
+
+  // unicode changes as of June 2020
+  ['@M', 'M@'],
+  ['@N', 'N@'],
+  ['@`', '`@'],
+  ['@~', '~@'],
+
+  // for devnagri unicode (possibly redundant],
+  ['W@', '@W'],
+  ['w@', '@w'],
+  ['o@', '@o'],
+  ['O@', '@O'],
+  ['y@', '@y'],
+  ['Y@', '@Y'],
+  ['ü@', '@ü'],
+  ['`@', '@`'],
+];
+
+
 /**
  * Convert Gurmukhi Unicode to ascii for webakhar
  *
@@ -370,7 +410,7 @@ function ascii(text = '', simplify = false) {
  * // => 'Awie imlu gurisK Awie imlu qU myry gurU ky ipAwry ]'
  */
 
-function unicode(text = '', reverse = false, simplify = false) {
+function unicode(text = '', reverse = false, simplify = false, validate = true) {
   if (text === '' || typeof text !== 'string') {
     return text;
   }
@@ -380,8 +420,16 @@ function unicode(text = '', reverse = false, simplify = false) {
   }
 
   let convertedText = '';
+  let validatedText = text;
 
-  const chars = text
+  if (validate) {
+    validAscii.forEach((e) => {
+      validatedText = validatedText.replace(new RegExp(e[0], 'g'), e[1]);
+    });
+  }
+
+  const chars = validatedText
+  //remove unneeded ascii
     .replace(/>/gi, '')
     .replace(/Ø/gi, '')
     .replace(/Æ/g, '')

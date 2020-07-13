@@ -31,6 +31,10 @@ describe('unicode', () => {
     expect(unicode('su`D ispwh durMq dubwh su swj snwh durjwn dlYNgy ]'))
       .toBe('ਸੁੱਧ ਸਿਪਾਹ ਦੁਰੰਤ ਦੁਬਾਹ ਸੁ ਸਾਜ ਸਨਾਹ ਦੁਰਜਾਨ ਦਲੈਂਗੇ ॥');
 
+    // ascii validation
+    expect(unicode('sq`Rün ko pl mo bD kIE ]386]'))
+      .toBe('ਸਤ੍ਰੁੱਨ ਕੋ ਪਲ ਮੋ ਬਧ ਕੀਓ ॥੩੮੬॥');
+
     // ਪੈਰ ਅੰਕ ਸਿਰਲੇਖ ਵਿਚ ੧
     expect(unicode('rwgu gauVI pUrbI₁ mhlw 5'))
       .toBe('ਰਾਗੁ ਗਉੜੀ ਪੂਰਬੀ₁ ਮਹਲਾ ੫');
